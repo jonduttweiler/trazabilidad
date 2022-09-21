@@ -13,15 +13,20 @@ type Destination = string;
 type ILMD = string;
 type TransformationID = string;
 
-export type EPCISEvent = {
+export interface EPCISEvent {
+  kind: 
+    "ObjectEvent"|
+    "AggregationEvent"|
+    "TransformationEvent"|
+    "TransactionEvent"
   eventTime: dateTimeStamp
   recordTime?: dateTimeStamp
-  eventTimeZoneOffset: string,
-  eventId?: EventID,
+  eventTimeZoneOffset: string
+  eventId?: EventID
   errorDeclaration?: ErrorDeclaration
 }
 
-export type ObjectEvent = EPCISEvent & {
+export interface ObjectEvent extends EPCISEvent {
   action: "ADD" | "OBSERVE" | "DELETE"
   epcList?: EPC[]
   quantityList?: QuantityElement[]
@@ -33,8 +38,9 @@ export type ObjectEvent = EPCISEvent & {
   sourceList?: Source[]
   destinationList?: Destination[]
   ilmd?: ILMD
-};
-export type AggregationEvent = EPCISEvent & {
+}
+
+export interface AggregationEvent extends EPCISEvent {
   action: "ADD" | "OBSERVE" | "DELETE"
   parentID: EPC
   childEPCs: EPC[]
@@ -46,9 +52,8 @@ export type AggregationEvent = EPCISEvent & {
   bizTransactionList?: BusinessTransaction[]
   sourceList?: Source[]
   destinationList?: Destination[]
-
-};
-export type TransformationEvent = EPCISEvent & {
+}
+export interface TransformationEvent extends EPCISEvent {
   inputEPCList?: EPC[]
   inputQuantityList?: QuantityElement[]
   outputEPCList?: EPC[]
@@ -62,8 +67,8 @@ export type TransformationEvent = EPCISEvent & {
   sourceList?: Source[]
   destinationList?: Destination[]
   ilmd?: ILMD
-};
-export type TransactionEvent = EPCISEvent & {
+}
+export interface TransactionEvent extends EPCISEvent {
   bizTransactionList: BusinessTransaction[]
   action: "ADD" | "OBSERVE" | "DELETE"
   parentID?: EPC, //When the parent identifieris an EPC, this field SHALL contain the “pure identity” URI 
@@ -75,4 +80,4 @@ export type TransactionEvent = EPCISEvent & {
   disposition?: DispositionID
   sourceList?: Source[]
   destinationList?: Destination[]
-};
+}
