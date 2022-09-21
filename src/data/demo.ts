@@ -2,21 +2,21 @@ import assert from 'node:assert/strict';
 import { EPCISEvent, ObjectEvent, TransformationEvent } from "../types"
 import events from "./data";
 
-const processedEvents = new Set<EPCISEvent>(); ///Array de eventos, ver como los comparamos!
 
 function trace(ids: string[]): EPCISEvent[] {
+    const processedEvents = new Set<EPCISEvent>(); ///Array de eventos
+    let inputs = ids; //Ver si es un array o no
 
-    const from: EPCISEvent[] = ouputFrom(...ids);
-    const inputs = from.map(ef => {
-        if (ef.kind === "TransformationEvent") { //Y si es de tipo observe + add?
-            const te = ef as TransformationEvent;
-            return te.inputEPCList;
-        }
-    }).flat().filter(input => input != undefined) as string[]; //Remove undefined values
-
-    from.forEach(event => processedEvents.add(event));
-    if (inputs.length > 0) {
-        trace(inputs);
+    while(inputs.length > 0){
+        const from: EPCISEvent[] = ouputFrom(...inputs);
+        inputs = from.map(ef => {
+            if (ef.kind === "TransformationEvent") {
+                const te = ef as TransformationEvent;
+                return te.inputEPCList;
+            }
+        }).flat().filter(input => input != undefined) as string[]; //Remove undefined values
+    
+        from.forEach(event => processedEvents.add(event));
     }
 
     return Array.from(processedEvents);
@@ -57,7 +57,7 @@ console.log(
 //Asserts acerca del trace length
 //console.log(trace("[L:2124|P:20200824124003267|Vto:24/08/2022]"))
 /* assert.deepEqual(
-    trace(["[L:2124|P:20200824124003267|Vto:24/08/2022]"]).length,
+    trace("[L:2124|P:20200824124003267|Vto:24/08/2022]").length,
     5
 ) */
 
