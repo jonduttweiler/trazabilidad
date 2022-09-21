@@ -3,10 +3,10 @@ import { EPCISEvent, ObjectEvent, TransformationEvent } from "../types"
 import events from "./data";
 
 
-function trace(ids: string[]): EPCISEvent[] {
+function trace(id: string): EPCISEvent[] {
     const processedEvents = new Set<EPCISEvent>(); //Array de eventos
     const processedInputs = new Set<string>();
-    let inputs = ids; //Ver si es un array o no
+    let inputs = [id]; //Ver si es un array o no
 
     while(inputs.length > 0){
         const from: EPCISEvent[] = ouputFrom(...inputs);
@@ -42,7 +42,7 @@ function ouputFrom(...epcIds: string[]): EPCISEvent[] {
 }
 
 console.log(
-    trace(["[L:2124|P:20200824124003267|Vto:24/08/2022]"])
+    trace("[L:2124|P:20200824124003267|Vto:24/08/2022]")
 )
 
 //console.log(ouputFrom("[L:2124|P:20200824124003267|Vto:24/08/2022]"))
