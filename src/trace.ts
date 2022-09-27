@@ -1,14 +1,12 @@
-import assert from 'node:assert/strict';
-import { EPCISEvent, ObjectEvent, TransformationEvent } from "../types"
-/* import events from "./data"; */
-import { events } from "./test";
+import { EPCISEvent, ObjectEvent, TransformationEvent } from "./types";
+import { events } from "./data/test";
 
-function trace(id: string): EPCISEvent[] {
+export function trace(id: string): EPCISEvent[] {
     const processedEvents = new Set<EPCISEvent>(); //Array de eventos
     const processedInputs = new Set<string>();
     let inputs = [id]; //Ver si es un array o no
 
-    while (inputs.length > 0) {
+    while(inputs.length > 0){
         const from: EPCISEvent[] = ouputFrom(...inputs);
         inputs.forEach(input => processedInputs.add(input));
 
@@ -18,7 +16,7 @@ function trace(id: string): EPCISEvent[] {
                 return te.inputEPCList;
             }
         }).flat().filter(input => input != undefined && !processedInputs.has(input)) as string[]; //Remove undefined values && avoid process products more than once
-
+    
         from.forEach(event => processedEvents.add(event));
     }
 
