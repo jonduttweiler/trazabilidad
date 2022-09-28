@@ -1,10 +1,7 @@
 import express from "express";
 import path from "path";
 import { loadApiEndpoints } from "./controllers/api";
-import "./data/demo";
 import TransactionService from "./services/TransactionService";
-
-
 
 // Create Express server
 const app = express();
