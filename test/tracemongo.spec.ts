@@ -1,23 +1,25 @@
 import { TraceService } from "../src/services/TraceService";
 import { LocalEventsService } from "../src/services/LocalEventsService";
-import { MongoDBEventsService } from "../src/services/MongoDBEventsService";
+import { MongoDBEventsServiceBuilder, MongoDBEventsService } from "../src/services/MongoDBEventsService";
+import { EventsService } from "../src/services/EventsService";
 
 
-const eventsService = new MongoDBEventsService({ 
-  url: "mongodb://172.17.0.2:27017",
-  dbName: "demo"
-});
-const traceService = new TraceService(eventsService);
+let traceService: TraceService;
 
-/* eventsService.on("connected", async () => {
-  console.log('searching...');
-  const result = await eventsService.ouputFrom("FA01");
-  console.log(result)
-})
+describe("trace test mongodb", () => {
+  beforeAll(async () => {
+    console.log("Can i use here a promise?");
+    const serviceBuilder = new MongoDBEventsServiceBuilder({
+      url: "mongodb://172.17.0.2:27017",
+      dbName: "demo"
+    });
+    const eventsService: EventsService = await serviceBuilder.create()
+    traceService = new TraceService(eventsService);
 
- */
-describe("trace test", () => {
-  
+    console.log("traceService initialized")
+
+  })
+
   it("Should return undefined for inexistent product code", () => {
     expect(traceService.trace("xxxx")).toHaveLength(0);
   });

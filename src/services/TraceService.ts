@@ -16,6 +16,7 @@ export class TraceService {
 
         while (inputs.length > 0) {
             const from: EPCISEvent[] = this.eventsService.ouputFrom(...inputs);
+            console.log("From:",from)
             inputs.forEach(input => processedInputs.add(input));
 
             inputs = from.map(ef => {
