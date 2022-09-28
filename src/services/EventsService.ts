@@ -1,7 +1,7 @@
 import { EPCISEvent } from "../types";
 
 export class EventsService {
-    ouputFrom(...epcIds: string[]): EPCISEvent[] {
+    ouputFrom(...epcIds: string[]): Promise<EPCISEvent[]> {
         throw new Error("Method not implemented.");
     }
 

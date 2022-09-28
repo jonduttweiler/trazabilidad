@@ -9,14 +9,13 @@ export class TraceService {
     }
 
 
-    trace(id: string): EPCISEvent[] {
+    async trace(id: string): Promise<EPCISEvent[]> {
         const processedEvents = new Set<EPCISEvent>(); //Array de eventos
         const processedInputs = new Set<string>();
         let inputs = [id]; //Ver si es un array o no
 
         while (inputs.length > 0) {
-            const from: EPCISEvent[] = this.eventsService.ouputFrom(...inputs);
-            console.log("From:",from)
+            const from: EPCISEvent[] = await this.eventsService.ouputFrom(...inputs);
             inputs.forEach(input => processedInputs.add(input));
 
             inputs = from.map(ef => {

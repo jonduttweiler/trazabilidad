@@ -37,12 +37,15 @@ export class MongoDBEventsService extends EventsService {
     }
 
 
-    ouputFrom(...epcIds: string[]): EPCISEvent[] {
-        return this.events.find({
+    ouputFrom(...epcIds: string[]): Promise<EPCISEvent[]> {
+
+        const cursor = this.events.find({
             $or: [
                 { $and: [{ kind: "TransformationEvent" }, { outputEPCList: { $in: epcIds } }] },
                 { $and: [{ kind: "ObjectEvent" }, { epcList: { $in: epcIds } }] },
             ]
-        }).toArray() as unknown as EPCISEvent[];
+        });
+        
+        return cursor.toArray() as unknown as Promise<EPCISEvent[]>;
     }
 }

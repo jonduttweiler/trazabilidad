@@ -9,8 +9,8 @@ export class LocalEventsService extends EventsService {
         this.events = events;
     }
 
-    ouputFrom(...epcIds: string[]): EPCISEvent[] {
-        return this.events.filter(event => {
+    async ouputFrom(...epcIds: string[]): Promise<EPCISEvent[]> {
+        const events: EPCISEvent[] =  this.events.filter(event => {
             if (event.kind === "TransformationEvent") {
                 const te = event as TransformationEvent;
                 return te.outputEPCList?.some(outputProduct => epcIds.includes(outputProduct));
@@ -20,6 +20,8 @@ export class LocalEventsService extends EventsService {
                 return includes;
             }
         })
+
+        return Promise.resolve(events);
 
     }
 }
