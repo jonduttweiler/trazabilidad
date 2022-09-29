@@ -24,44 +24,49 @@ export async function generateEvents(amount = 1000000, callback: (arg0: object) 
         //Para los ingresos hay que generar un rimp, c/datos del prod y del apiario
 
         const tamboresExtraccionIds = [];
-        const tamboresIngresoIds = [];
         let ingresoAlzaFlag = false;
         //No todos los lotes arrancan con un ingreso de alza
-
+        
         if (Math.random() > 0.5) {
-            //Generar entre una 1 y 3 alzas
-            const alzasAmount = Math.ceil(Math.random() * 3);
-            const alzasIds = [];
-            for (let j = 0; j < alzasAmount; j++) {
-                alzasIds.push(generateId("A"));
+            //Generar entre una 1 y 3 !alzas - eventos de ingresos de alza
+            const ingresoAlzasAmount = Math.ceil(Math.random() * 3);
+            for (let j = 0; j < ingresoAlzasAmount; j++) {
+                
+                const alzasIds = Array.apply(null, Array(Math.ceil(Math.random()*4))).map((x, i) => { return generateId("A"); })
+                
+                const e0 = ingresoAlza(generateId(`IA`), alzasIds, "11/12/2019 11:05:12", [generateId("RIMP")]);
+                it_events.push(e0);
+                
+                //generar entre 1 y tres tambores como resultado de extraccion
+                const tamboresExtraccionAmount = Math.ceil(Math.random() * 3);
+                for (let j = 0; j < tamboresExtraccionAmount; j++) {
+                    tamboresExtraccionIds.push(generateId("T"));
+                }
+                
+                const e01 = extraccion(generateId(`EA`), alzasIds, tamboresExtraccionIds, "11/12/2019 18:07:12");
+                it_events.push(e01);
+                
             }
-
-            //generar entre 1 y tres tambores como resultado de extraccion
-            const tamboresExtraccionAmount = Math.ceil(Math.random() * 3);
-            for (let j = 0; j < tamboresExtraccionAmount; j++) {
-                tamboresExtraccionIds.push(generateId("T"));
-            }
-            const e0 = ingresoAlza(generateId(`IA`), alzasIds, "11/12/2019 11:05:12", [generateId("RIMP")]);
-            it_events.push(e0);;
-
-            const e01 = extraccion(generateId(`EA`), alzasIds, tamboresExtraccionIds, "11/12/2019 18:07:12");
-            it_events.push(e01);
-
+            
+            
             ingresoAlzaFlag = true;
         }
+        
+        const tamboresIngresoIds = [];
 
         if (!ingresoAlzaFlag || ingresoAlzaFlag && Math.random() > 0.5) {
 
             //Tampoco todos van a tener un ingreso de tambor
-            const tamboresIngresoAmount = Math.ceil(Math.random() * 3);
+            const eventosIngresoTamboresAmount = Math.ceil(Math.random() * 5); //Ingresar tambores por distintos eventos (hasta 5)
+            /* Cada evnto que tenga entre 1 y 3 tambores distintos */
 
-            for (let j = 0; j < tamboresIngresoAmount; j++) {
-                tamboresIngresoIds.push(generateId("T"));
+            for (let j = 0; j < eventosIngresoTamboresAmount; j++) {
+                //Ids de este evento en particular
+                const tamboresId = Array.apply(null, Array(Math.ceil(Math.random()*3))).map((x, i) => { return generateId("T"); })
+                const e1 = ingresoTambor(generateId("IT"), tamboresId, "10/12/2020 12:05:12", [generateId("RIMP")]);
+                tamboresIngresoIds.push(...tamboresId);
+                it_events.push(e1);
             }
-
-            const e1 = ingresoTambor(generateId("IT"), tamboresIngresoIds, "10/12/2020 12:05:12", [generateId("RIMP")]);
-            it_events.push(e1);
-
         }
 
 
