@@ -1,4 +1,4 @@
-import { EPCISEvent, ObjectEvent, TransformationEvent } from "../types";
+import { EPCISEvent, ObjectEvent, TransformationEvent } from "../../src/types";
 
 const rimps = {
 

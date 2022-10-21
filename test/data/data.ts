@@ -1,6 +1,5 @@
-import assert from 'node:assert/strict';
-import { Console } from 'node:console';
-import { EPCISEvent, ObjectEvent, TransformationEvent } from "../types"
+
+import { ObjectEvent, TransformationEvent } from "../../src/types";
 
 const RIMPS = {
     "RIMP-0000-00000001": {

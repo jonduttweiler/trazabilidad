@@ -1,5 +1,5 @@
 import { EPCISEvent, ObjectEvent, TransformationEvent } from "./types";
-import { events } from "./data/test";
+import { events } from "../test/data/test";
 
 export function trace(id: string): EPCISEvent[] {
     const processedEvents = new Set<EPCISEvent>(); //Array de eventos
