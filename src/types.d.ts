@@ -14,70 +14,70 @@ type ILMD = string;
 type TransformationID = string;
 
 export interface EPCISEvent {
-  kind: 
-    "ObjectEvent"|
-    "AggregationEvent"|
-    "TransformationEvent"|
-    "TransactionEvent"
-  eventTime: dateTimeStamp
-  recordTime?: dateTimeStamp
-  eventTimeZoneOffset: string
-  eventId?: EventID
-  errorDeclaration?: ErrorDeclaration
+  kind:
+    | "ObjectEvent"
+    | "AggregationEvent"
+    | "TransformationEvent"
+    | "TransactionEvent";
+  eventTime: dateTimeStamp;
+  recordTime?: dateTimeStamp;
+  eventTimeZoneOffset: string;
+  eventId?: EventID;
+  errorDeclaration?: ErrorDeclaration;
 }
 
 export interface ObjectEvent extends EPCISEvent {
-  action: "ADD" | "OBSERVE" | "DELETE"
-  epcList?: EPC[]
-  quantityList?: QuantityElement[]
-  readPoint?: ReadPointID
-  bizLocation?: BusinessLocationID
-  bizStep?: BusinessStepID
-  disposition?: DispositionID
-  bizTransactionList?: BusinessTransaction[]
-  sourceList?: Source[]
-  destinationList?: Destination[]
-  ilmd?: ILMD
+  action: "ADD" | "OBSERVE" | "DELETE";
+  epcList?: EPC[];
+  quantityList?: QuantityElement[];
+  readPoint?: ReadPointID;
+  bizLocation?: BusinessLocationID;
+  bizStep?: BusinessStepID;
+  disposition?: DispositionID;
+  bizTransactionList?: BusinessTransaction[];
+  sourceList?: Source[];
+  destinationList?: Destination[];
+  ilmd?: ILMD;
 }
 
 export interface AggregationEvent extends EPCISEvent {
-  action: "ADD" | "OBSERVE" | "DELETE"
-  parentID: EPC
-  childEPCs: EPC[]
-  childQuantityList: QuantityElement[]
-  readPoint?: ReadPointID
-  bizLocation?: BusinessLocationID
-  bizStep?: BusinessStepID
-  disposition?: DispositionID
-  bizTransactionList?: BusinessTransaction[]
-  sourceList?: Source[]
-  destinationList?: Destination[]
+  action: "ADD" | "OBSERVE" | "DELETE";
+  parentID: EPC;
+  childEPCs: EPC[];
+  childQuantityList: QuantityElement[];
+  readPoint?: ReadPointID;
+  bizLocation?: BusinessLocationID;
+  bizStep?: BusinessStepID;
+  disposition?: DispositionID;
+  bizTransactionList?: BusinessTransaction[];
+  sourceList?: Source[];
+  destinationList?: Destination[];
 }
 export interface TransformationEvent extends EPCISEvent {
-  inputEPCList?: EPC[]
-  inputQuantityList?: QuantityElement[]
-  outputEPCList?: EPC[]
-  outputQuantityList?: QuantityElement[]
-  transformationId?: TransformationID,
-  readPoint?: ReadPointID
-  bizLocation?: BusinessLocationID
-  bizStep?: BusinessStepID
-  disposition?: DispositionID
-  bizTransactionList?: BusinessTransaction[]
-  sourceList?: Source[]
-  destinationList?: Destination[]
-  ilmd?: ILMD
+  inputEPCList?: EPC[];
+  inputQuantityList?: QuantityElement[];
+  outputEPCList?: EPC[];
+  outputQuantityList?: QuantityElement[];
+  transformationId?: TransformationID;
+  readPoint?: ReadPointID;
+  bizLocation?: BusinessLocationID;
+  bizStep?: BusinessStepID;
+  disposition?: DispositionID;
+  bizTransactionList?: BusinessTransaction[];
+  sourceList?: Source[];
+  destinationList?: Destination[];
+  ilmd?: ILMD;
 }
 export interface TransactionEvent extends EPCISEvent {
-  bizTransactionList: BusinessTransaction[]
-  action: "ADD" | "OBSERVE" | "DELETE"
-  parentID?: EPC, //When the parent identifieris an EPC, this field SHALL contain the “pure identity” URI 
-  epcList?: EPC[]
-  quantityList?: QuantityElement[]
-  readPoint?: ReadPointID
-  bizLocation?: BusinessLocationID
-  bizStep?: BusinessStepID
-  disposition?: DispositionID
-  sourceList?: Source[]
-  destinationList?: Destination[]
+  bizTransactionList: BusinessTransaction[];
+  action: "ADD" | "OBSERVE" | "DELETE";
+  parentID?: EPC; //When the parent identifieris an EPC, this field SHALL contain the “pure identity” URI
+  epcList?: EPC[];
+  quantityList?: QuantityElement[];
+  readPoint?: ReadPointID;
+  bizLocation?: BusinessLocationID;
+  bizStep?: BusinessStepID;
+  disposition?: DispositionID;
+  sourceList?: Source[];
+  destinationList?: Destination[];
 }
