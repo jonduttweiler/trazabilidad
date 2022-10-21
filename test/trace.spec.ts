@@ -1,6 +1,6 @@
 import { TraceService } from "../src/services/TraceService";
 import { LocalEventsService } from "../src/services/LocalEventsService";
-import { events } from "../src/data/test";
+import { events } from "./data/test";
 
 const eventsService = new LocalEventsService(events);
 const traceService = new TraceService(eventsService);
