@@ -1,4 +1,3 @@
-import { trace } from "console";
 import express from "express";
 import { MongoDBEventsService, MongoDBEventsServiceBuilder } from "./services/MongoDBEventsService";
 import { TraceService } from "./services/TraceService";
